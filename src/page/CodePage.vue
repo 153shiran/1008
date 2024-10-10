@@ -15,6 +15,7 @@ const tabber = ref([
 const isActive = ref(new Array(tabber.value.length).fill(false));
 const isActivees = ref();
 const fonttext = ref("");
+const drawer = ref(false);
 function defultdata() {
     isActive.value[0] = true;
     fonttext.value = tabber.value[0].name;
@@ -48,7 +49,7 @@ const handclick = (item, index) => {
             <h1>{{ fonttext }}</h1>
             <footer>
                 <div class="footerlist" v-show="isActivees">
-                    <el-tabs class="listtab" type="border-card">
+                    <el-tabs class="listtab">
                         <el-tab-pane class="listtabss" label="最近访问">
                             <div style="display: flex;align-items: center;flex-direction: column;"><img
                                     src="../static/images/4.png" alt="">暂无数据</div>
@@ -519,7 +520,9 @@ const handclick = (item, index) => {
                 </div>
             </footer>
         </section>
-
+        <el-drawer v-model="drawer" title="I am the title" :with-header="false">
+            <span>Hi there!</span>
+        </el-drawer>
     </div>
 </template>
 <style scoped>
@@ -564,9 +567,6 @@ h1 {
 }
 
 .listtab {
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
     height: 75vh;
     border-bottom: none;
 }
@@ -577,10 +577,6 @@ h1 {
     align-items: center;
     width: 90vw;
     height: 75vh;
-}
-
-.el-tabs__item {
-    color: black;
 }
 
 p {
