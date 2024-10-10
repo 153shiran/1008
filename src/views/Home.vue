@@ -3,13 +3,17 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 const router = useRouter();
-const giteedata = ref({
-  grant_type: "password",
+const userLoginInfo = ref({
   username: "",
   password: "",
-  client_id: "c631cf22a2ef73f96e2cc02a53d85fb77c28854077b418bc80b32b777a9356c8",
+});
+const giteedata = ref({
+  grant_type: "password",
+  username: userLoginInfo.value.username,
+  password: userLoginInfo.value.password,
+  client_id: "47c6365db10a1c95f7c810bf39604b00d06f7b1b67d8f4a782f84a49c36a1dde",
   client_secret:
-    "57fc9dfc774165d231da881aa217f9f11771c49182714bee6d565277c048388f",
+    "c4e353626d74bef82d898bfb0f6d867994d1007dbac2f13c37963676e68cc29f",
   scope:
     "user_info projects pull_requests issues notes keys hook groups gists enterprises",
 });
@@ -31,7 +35,7 @@ const handleClick = () => {
 const getAuthorization = () => {
   axios
     .get(
-      "https://gitee.com/oauth/authorize?client_id=f3fd7280e1bc85e43ffdb1f4bd00002bd1a862346ee0fb2f92987cef47de2d91&redirect_uri=405d2e20c02c7a45f442405bff5b9ed59967cee7ecfa757b8bce41f623c9279d&response_type=code"
+      "https://gitee.com/oauth/authorize?client_id=47c6365db10a1c95f7c810bf39604b00d06f7b1b67d8f4a782f84a49c36a1dde&redirect_uri=405d2e20c02c7a45f442405bff5b9ed59967cee7ecfa757b8bce41f623c9279d&response_type=code"
     )
     .then((res) => {
       console.log("res", res);
@@ -43,7 +47,7 @@ const getAuthorization = () => {
 </script>
 <template>
   <header>
-    <section>
+    <section class="tupian">
       <img src="../../public/images/1.png" />
     </section>
     <div class="biglogin">
@@ -56,14 +60,14 @@ const getAuthorization = () => {
         <div class="textinput">
           <p>
             <el-input
-              v-model="giteedata.username"
+              v-model="userLoginInfo.username"
               style="width: 350px; height: 50px"
               placeholder="账号"
             />
           </p>
           <p>
             <el-input
-              v-model="giteedata.password"
+              v-model="userLoginInfo.password"
               style="width: 350px; height: 50px"
               type="password"
               placeholder="密码"
@@ -73,7 +77,6 @@ const getAuthorization = () => {
         </div>
         <el-checkbox label="我已阅读并同意服务协议和隐私协议" size="large" />
         <el-button type="primary" @click="handleClick">登录</el-button>
-        <el-button type="primary" @click="getAuthorization">授权</el-button>
         <p style="text-align: center">
           <span>还未注册？</span>
           <span style="color: #409eff">立即注册</span>
@@ -110,6 +113,10 @@ img {
 
 .switchlogin {
   justify-content: space-around;
+}
+
+.switchlogin p {
+  border-bottom: 2px solid skyblue;
 }
 
 .textinput {
